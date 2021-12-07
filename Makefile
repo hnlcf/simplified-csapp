@@ -3,7 +3,8 @@ CFLAGS = -Wall -g -O2 -Werror -std=gnu99
 
 GDB = /usr/bin/gdb
 
-EXE = bin/program
+BIN = ./bin
+EXE = $(BIN)/program
 
 SRC = ./src
 CODE = $(SRC)/*.c $(SRC)/**/*.c
@@ -11,14 +12,22 @@ CODE = $(SRC)/*.c $(SRC)/**/*.c
 
 .PHONY: program
 
-main: 
+all: cl fmt csapp run
+
+csapp: 
 	@$(CC) $(CFLAGS) -I$(SRC) $(CODE) -o $(EXE)
 
 run:
-	@./$(EXE)
+	@$(EXE)
 
-debug: 
-	@$(GDB) ./$(EXE)
+debug: csapp
+	@$(GDB) $(EXE)
 
-format:
+clean:
+	@rm -f $(BIN)/*.o $(BIN)/*~ $(EXE)
+
+fmt: cl
 	@cd $(SRC) && find . -name "*.c" -o -name "*.h" | xargs clang-format -style=file -i
+
+cl: 
+	@clear

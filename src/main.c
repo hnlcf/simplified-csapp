@@ -13,7 +13,7 @@ int main() {
   reg.rax = 0x12340000;
   reg.rbx = 0x0;
   reg.rcx = 0x8000660;
-  reg.rbx = 0xabcd;
+  reg.rdx = 0xabcd;
   reg.rsi = 0x7ffffffee2f8;
   reg.rdi = 0x1;
   reg.rbp = 0x7ffffffee210;
@@ -21,15 +21,23 @@ int main() {
 
   reg.rip = (uint64_t)&program[11];
 
-  mm[va2pa(0x7ffffffee210)] = (uint8_t)0x08000660; // rbp
-  mm[va2pa(0x7ffffffee208)] = (uint8_t)0x0;
-  mm[va2pa(0x7ffffffee200)] = (uint8_t)0xabcd;
-  mm[va2pa(0x7ffffffee1f8)] = (uint8_t)0x12340000;
-  mm[va2pa(0x7ffffffee1f0)] = (uint8_t)0x08000660; // rsp
+  write64bits_dram(va2pa(0x7ffffffee210), 0x08000660); // rbp
+  write64bits_dram(va2pa(0x7ffffffee208), 0x0);
+  write64bits_dram(va2pa(0x7ffffffee200), 0xabcd);
+  write64bits_dram(va2pa(0x7ffffffee1f8), 0x12340000);
+  write64bits_dram(va2pa(0x7ffffffee1f0), 0x08000660); // rsp
 
-  // run instruction
+  // printf("0x%lx\n", read64bits_dram(va2pa(0x7ffffffee210)));
+
+  print_register();
+  print_stack();
+
+  // TODO: temporarily shut --> run instruction
   for (int i = 0; i < 15; i++) {
     instruction_cycle();
+
+    print_register();
+    print_stack();
   }
 
   // verify
@@ -50,11 +58,12 @@ int main() {
     printf("register not match\n");
   }
 
-  match = match && (mm[va2pa(0x7ffffffee210)] == 0x08000660); // rbp
-  match = match && (mm[va2pa(0x7ffffffee208)] == 0x1234abcd);
-  match = match && (mm[va2pa(0x7ffffffee200)] == 0xabcd);
-  match = match && (mm[va2pa(0x7ffffffee1f8)] == 0x12340000);
-  match = match && (mm[va2pa(0x7ffffffee1f0)] == 0x08000660); // rsp
+  // match from rbp --> rsp
+  match = match && (read64bits_dram(va2pa(0x7ffffffee210)) == 0x08000660);
+  match = match && (read64bits_dram(va2pa(0x7ffffffee208)) == 0x1234abcd);
+  match = match && (read64bits_dram(va2pa(0x7ffffffee200)) == 0xabcd);
+  match = match && (read64bits_dram(va2pa(0x7ffffffee1f8)) == 0x12340000);
+  match = match && (read64bits_dram(va2pa(0x7ffffffee1f0)) == 0x08000660);
 
   if (match == 1) {
     printf("memory match\n");

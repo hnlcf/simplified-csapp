@@ -69,12 +69,62 @@ typedef void (*handler_t)(uint64_t, uint64_t);
 
 handler_t handler_table[NUM_INSTRTYPE];
 
+/**
+ * @brief Initialize the handler table with instruction function handlers
+ * match the same function pointer.
+ *
+ */
 void init_handler_table();
 
+/**
+ * @brief Iterate through each instruction and execute
+ *
+ */
 void instruction_cycle();
 
+/**
+ * @brief Move value in source to the destination
+ *
+ * dst = src
+ *
+ * @param src source: register
+ * @param dst destination: register
+ */
+void mov_reg_reg_handler(uint64_t src, uint64_t dst);
+
+/**
+ * @brief Move value in source to the destination
+ *
+ * dst = src
+ *
+ * @param src source: register
+ * @param dst destination: memmory
+ */
+void mov_reg_mem_handler(uint64_t src, uint64_t dst);
+void mov_mem_reg_handler(uint64_t src, uint64_t dst);
+
+/**
+ * @brief Add the values in reg1 and reg2 to the `dst`. \n
+ *
+ * dst = dst + src
+ *
+ * @param src source: register
+ * @param dst destination: register
+ */
 void add_reg_reg_handler(uint64_t src, uint64_t dst);
 
-void mov_reg_reg_handler(uint64_t src, uint64_t dst);
+/**
+ * @brief Call function
+ *
+ * @param src imm address of called function
+ * @param dst empty
+ */
+void call_handler(uint64_t src, uint64_t dst);
+
+void push_reg_handler(uint64_t src, uint64_t dst);
+
+void pop_reg_handler(uint64_t src, uint64_t dst);
+
+void ret_handler(uint64_t src, uint64_t dst);
 
 #endif // _INSTRUCTION_H_

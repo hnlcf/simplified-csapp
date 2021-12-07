@@ -18,4 +18,10 @@
 
 uint8_t mm[MM_LEN]; // physical memory
 
+uint64_t read64bits_dram(uint64_t p_addr);
+void write64bits_dram(uint64_t p_addr, uint64_t data);
+
+void print_register();
+void print_stack();
+
 #endif // _DRAM_H_
