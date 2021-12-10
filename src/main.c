@@ -46,7 +46,7 @@ int main() {
   match = match && (reg.rax == 0x1234abcd);
   match = match && (reg.rbx == 0x0);
   match = match && (reg.rcx == 0x8000660);
-  match = match && (reg.rbx == 0x12340000);
+  match = match && (reg.rdx == 0x12340000);
   match = match && (reg.rsi == 0xabcd);
   match = match && (reg.rdi == 0x12340000);
   match = match && (reg.rbp == 0x7ffffffee210);

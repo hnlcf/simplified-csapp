@@ -12,6 +12,7 @@
       - [2021-12-4](#2021-12-4)
       - [2021-12-5](#2021-12-5)
       - [2021-12-6](#2021-12-6)
+      - [2021-12-10](#2021-12-10)
 
 ## Road Map
 
@@ -81,3 +82,16 @@ e.g. 1 + 2 + 3
 ```
 
 实现了 `push_reg pop_reg ret mov_reg_mem mov_mem_reg` 指令。
+
+#### 2021-12-10
+
+Round 1 finished.
+
+Add Function: MOV, ADD, PUSH, POP, CALL, RET.
+
+Running with assembly code in `code.c` , work well and data match.
+
+next step:
+
+- refactor
+- string instructions

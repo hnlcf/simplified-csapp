@@ -146,7 +146,7 @@ void pop_reg_handler(uint64_t src, uint64_t dst) {
 
 void call_handler(uint64_t src, uint64_t dst) {
   // leave 8-byte stack space out
-  reg.rsp -= 8;
+  reg.rsp -= 0x8;
   // write the return address to rsp --> push return address onto stack
   write64bits_dram(va2pa(reg.rsp), reg.rip + sizeof(inst_t));
 
