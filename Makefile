@@ -7,18 +7,17 @@ BIN = ./bin
 EXE = $(BIN)/exe_hardware
 
 SRC_DIR = ./src
-CPU =$(SRC_DIR)/hardware/cpu/mmu.c $(SRC_DIR)/hardware/cpu/isa.c
+CPU = $(SRC_DIR)/hardware/cpu/mmu.c $(SRC_DIR)/hardware/cpu/isa.c
 COMMON = $(SRC_DIR)/common/print.c $(SRC_DIR)/common/convert.c
 MEMORY = $(SRC_DIR)/hardware/memory/dram.c
 MAIN_HARDWARE = $(SRC_DIR)/main_hardware.c
-
 
 .PHONY:hardware
 
 all: cl fmt hardware run
 
 hardware:
-	$(CC) $(CFLAGS) -I$(SRC_DIR) $(COMMON) $(CPU) $(MEMORY) $(DISK) $(MAIN_HARDWARE) -o $(EXE)
+	@$(CC) $(CFLAGS) -I$(SRC_DIR) $(COMMON) $(CPU) $(MEMORY) $(MAIN_HARDWARE) -o $(EXE)
 
 run:
 	@$(EXE)
