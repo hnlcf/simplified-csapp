@@ -1,7 +1,8 @@
 
 bin/
 *.txt
-float.c
+test/
+demo.py
 
 # Jetbrains
 .idea/
