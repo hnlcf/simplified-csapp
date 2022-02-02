@@ -1,8 +1,12 @@
 
-bin/
-*.txt
+in
+out
+csapp.sublime-project
+csapp.sublime-workspace
+
 test/
-demo.py
+build/
+.cache/
 
 # Jetbrains
 .idea/

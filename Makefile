@@ -1,11 +1,12 @@
-CC = /usr/bin/gcc-7
-CFLAGS = -Wall -g -O2 -Werror -std=gnu99 -Wno-unused-function
+CC = gcc
+CFLAGS = -Wall -g -O0 -Werror -std=gnu99 -Wno-unused-function
 
-GDB = /usr/bin/gdb
+GDB = gdb
 
-BIN = ./bin
-EXE = $(BIN)/exe_hardware
+BIN = ./build
+EXE = $(BIN)/csapp
 
+INCLUDE_DIR = ./include
 SRC_DIR = ./src
 CPU = $(SRC_DIR)/hardware/cpu/mmu.c $(SRC_DIR)/hardware/cpu/isa.c
 COMMON = $(SRC_DIR)/common/print.c $(SRC_DIR)/common/convert.c
@@ -17,19 +18,19 @@ MAIN_HARDWARE = $(SRC_DIR)/main_hardware.c
 all: cl fmt hardware run
 
 hardware:
-	@$(CC) $(CFLAGS) -I$(SRC_DIR) $(COMMON) $(CPU) $(MEMORY) $(MAIN_HARDWARE) -o $(EXE)
+	@$(CC) $(CFLAGS) -I$(INCLUDE_DIR) $(COMMON) $(CPU) $(MEMORY) $(MAIN_HARDWARE) -o $(EXE)
 
 run:
-	@$(EXE)
+	$(EXE)
 
 debug: hardware
-	@$(GDB) $(EXE)
+	$(GDB) $(EXE)
 
 clean:
-	@rm -f $(BIN)/*.o $(BIN)/*~ $(EXE)
+	rm -f $(BIN)/*.o $(BIN)/*~ $(EXE)
 
 fmt: cl
-	@cd $(SRC_DIR) && find . -name "*.c" -o -name "*.h" | xargs clang-format -style=file -i
+	cd $(SRC_DIR) && find . -name "*.c" -o -name "*.h" | xargs clang-format -style=file -i
 
 cl: 
-	@clear
+	clear

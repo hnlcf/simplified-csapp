@@ -1,27 +1,34 @@
 
-#include <headers/common.h>
-#include <headers/cpu.h>
-#include <headers/memory.h>
+#include <common.h>
+#include <cpu.h>
+#include <memory.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define MAX_NUM_INSTRUCTION_CYCLE 100
 
-static void TestAddFunctionCallAndComputation();
+static void
+TestAddFunctionCallAndComputation();
 
-// symbols from isa and sram
-void print_register(core_t *cr);
-void print_stack(core_t *cr);
-
-int main() {
+int
+main()
+{
+  printf("hello world\n");
   TestAddFunctionCallAndComputation();
   return 0;
 }
 
-static void TestAddFunctionCallAndComputation() {
+static void
+TestAddFunctionCallAndComputation()
+{
+  uint64_t ACTIVE_CORE;
   ACTIVE_CORE = 0x0;
+  core_t* cores;
+  cores = (core_t*)malloc(sizeof(core_t) * NUM_CORES);
 
-  core_t *ac = (core_t *)&cores[ACTIVE_CORE];
+  core_t* ac = (core_t*)&cores[ACTIVE_CORE];
 
   // init state
   ac->reg.rax = 0xabcd;
@@ -51,21 +58,21 @@ static void TestAddFunctionCallAndComputation() {
   // 14 after pop before ret
   // 15 after ret
   char assembly[15][MAX_INSTRUCTION_CHAR] = {
-      "push   %rbp",             // 0
-      "mov    %rsp,%rbp",        // 1
-      "mov    %rdi,-0x18(%rbp)", // 2
-      "mov    %rsi,-0x20(%rbp)", // 3
-      "mov    -0x18(%rbp),%rdx", // 4
-      "mov    -0x20(%rbp),%rax", // 5
-      "add    %rdx,%rax",        // 6
-      "mov    %rax,-0x8(%rbp)",  // 7
-      "mov    -0x8(%rbp),%rax",  // 8
-      "pop    %rbp",             // 9
-      "retq",                    // 10
-      "mov    %rdx,%rsi",        // 11
-      "mov    %rax,%rdi",        // 12
-      "callq  0",                // 13
-      "mov    %rax,-0x8(%rbp)",  // 14
+    "push   %rbp",             // 0
+    "mov    %rsp,%rbp",        // 1
+    "mov    %rdi,-0x18(%rbp)", // 2
+    "mov    %rsi,-0x20(%rbp)", // 3
+    "mov    -0x18(%rbp),%rdx", // 4
+    "mov    -0x20(%rbp),%rax", // 5
+    "add    %rdx,%rax",        // 6
+    "mov    %rax,-0x8(%rbp)",  // 7
+    "mov    -0x8(%rbp),%rax",  // 8
+    "pop    %rbp",             // 9
+    "retq",                    // 10
+    "mov    %rdx,%rsi",        // 11
+    "mov    %rax,%rdi",        // 12
+    "callq  0",                // 13
+    "mov    %rax,-0x8(%rbp)",  // 14
   };
   ac->rip = (uint64_t)&assembly[11];
   sprintf(assembly[13], "callq  $%p", &assembly[0]);
@@ -112,4 +119,6 @@ static void TestAddFunctionCallAndComputation() {
   } else {
     printf("memory mismatch\n");
   }
+
+  free(cores);
 }

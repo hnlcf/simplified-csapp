@@ -1,9 +1,9 @@
 
+#pragma once
 // include guards to prevent double declaration of any identifiers
 // such as types, enums and static variables
-#ifndef CPU_GUARD
-#define CPU_GUARD
-
+#ifndef _CPU_H_
+#define _CPU_H_
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -14,100 +14,119 @@
 // struct of registers in each core
 // resource accessible to the core itself only
 
-typedef struct REGISTER_STRUCT {
+typedef struct REGISTER_STRUCT
+{
   // return value
-  union {
+  union
+  {
     uint64_t rax;
     uint32_t eax;
     uint16_t ax;
-    struct {
+    struct
+    {
       uint8_t al;
       uint8_t ah;
     };
   };
 
   // callee saved
-  union {
+  union
+  {
     uint64_t rbx;
     uint32_t ebx;
     uint16_t bx;
-    struct {
+    struct
+    {
       uint8_t bl;
       uint8_t bh;
     };
   };
 
   // 4th argument
-  union {
+  union
+  {
     uint64_t rcx;
     uint32_t ecx;
     uint16_t cx;
-    struct {
+    struct
+    {
       uint8_t cl;
       uint8_t ch;
     };
   };
   // 3th argument
-  union {
+  union
+  {
     uint64_t rdx;
     uint32_t edx;
     uint16_t dx;
-    struct {
+    struct
+    {
       uint8_t dl;
       uint8_t dh;
     };
   };
   // 2nd argument
-  union {
+  union
+  {
     uint64_t rsi;
     uint32_t esi;
     uint16_t si;
-    struct {
+    struct
+    {
       uint8_t sil;
       uint8_t sih;
     };
   };
   // 1st argument
-  union {
+  union
+  {
     uint64_t rdi;
     uint32_t edi;
     uint16_t di;
-    struct {
+    struct
+    {
       uint8_t dil;
       uint8_t dih;
     };
   };
 
   // callee saved frame pointer
-  union {
+  union
+  {
     uint64_t rbp;
     uint32_t ebp;
     uint16_t bp;
-    struct {
+    struct
+    {
       uint8_t bpl;
       uint8_t bph;
     };
   };
   // stack pointer
-  union {
+  union
+  {
     uint64_t rsp;
     uint32_t esp;
     uint16_t sp;
-    struct {
+    struct
+    {
       uint8_t spl;
       uint8_t sph;
     };
   };
 
   // 5th argument
-  union {
+  union
+  {
     uint64_t r8;
     uint32_t r8d;
     uint16_t r8w;
     uint8_t r8b;
   };
   // 6th argument
-  union {
+  union
+  {
     uint64_t r9;
     uint32_t r9d;
     uint16_t r9w;
@@ -115,14 +134,16 @@ typedef struct REGISTER_STRUCT {
   };
 
   // caller saved
-  union {
+  union
+  {
     uint64_t r10;
     uint32_t r10d;
     uint16_t r10w;
     uint8_t r10b;
   };
   // caller saved
-  union {
+  union
+  {
     uint64_t r11;
     uint32_t r11d;
     uint16_t r11w;
@@ -130,28 +151,32 @@ typedef struct REGISTER_STRUCT {
   };
 
   // callee saved
-  union {
+  union
+  {
     uint64_t r12;
     uint32_t r12d;
     uint16_t r12w;
     uint8_t r12b;
   };
   // callee saved
-  union {
+  union
+  {
     uint64_t r13;
     uint32_t r13d;
     uint16_t r13w;
     uint8_t r13b;
   };
   // callee saved
-  union {
+  union
+  {
     uint64_t r14;
     uint32_t r14d;
     uint16_t r14w;
     uint8_t r14b;
   };
   // callee saved
-  union {
+  union
+  {
     uint64_t r15;
     uint32_t r15d;
     uint16_t r15w;
@@ -177,9 +202,11 @@ Note: SRAM cache address is the translated physical address
 /*      cpu core                        */
 /*======================================*/
 
-typedef struct CORE_STRUCT {
+typedef struct CORE_STRUCT
+{
   // program counter or instruction pointer
-  union {
+  union
+  {
     uint64_t rip;
     uint32_t eip;
   };
@@ -227,15 +254,16 @@ typedef struct CORE_STRUCT {
 
 // define cpu core array to support core level parallelism
 #define NUM_CORES 1
-core_t cores[NUM_CORES];
+extern core_t cores[NUM_CORES];
 // active core for current task
-uint64_t ACTIVE_CORE;
+extern uint64_t ACTIVE_CORE;
 
 #define MAX_INSTRUCTION_CHAR 64
 #define NUM_INSTRTYPE 14
 
 // CPU's instruction cycle: execution of instructions
-void instruction_cycle(core_t *cr);
+void
+instruction_cycle(core_t* cr);
 
 /*--------------------------------------*/
 // place the functions here because they requires the core_t type
@@ -245,7 +273,14 @@ void instruction_cycle(core_t *cr);
 
 // translate the virtual address to physical address in MMU
 // each MMU is owned by each core
-uint64_t va2pa(uint64_t vaddr, core_t *cr);
+uint64_t
+va2pa(uint64_t vaddr, core_t* cr);
+
+// symbols from isa and sram
+void
+print_register(core_t* cr);
+void
+print_stack(core_t* cr);
 
 // end of include guard
-#endif
+#endif // _CPU_H_

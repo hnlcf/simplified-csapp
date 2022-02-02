@@ -1,8 +1,9 @@
 
 // Dynamic Random Access Memory
-#include <headers/common.h>
-#include <headers/cpu.h>
-#include <headers/memory.h>
+#include <common.h>
+#include <cpu.h>
+#include <stdint.h>
+#include <memory.h>
 
 /*
 Be careful with the x86-64 little endian integer encoding
@@ -10,8 +11,12 @@ e.g. write 0x00007fd357a02ae0 to cache, the memory lapping should be:
     e0 2a a0 57 d3 7f 00 00
 */
 
+uint8_t pm[PHYSICAL_MEMORY_SPACE] = {};
+
 // memory accessing used in instructions
-uint64_t read64bits_dram(uint64_t paddr, core_t *cr) {
+uint64_t
+read64bits_dram(uint64_t paddr, core_t* cr)
+{
   if (DEBUG_ENABLE_SRAM_CACHE == 1) {
     // try to load uint64_t from SRAM cache
     // little-endian
@@ -33,7 +38,9 @@ uint64_t read64bits_dram(uint64_t paddr, core_t *cr) {
   }
 }
 
-void write64bits_dram(uint64_t paddr, uint64_t data, core_t *cr) {
+void
+write64bits_dram(uint64_t paddr, uint64_t data, core_t* cr)
+{
   if (DEBUG_ENABLE_SRAM_CACHE == 1) {
     // try to write uint64_t to SRAM cache
     // little-endian
