@@ -1,12 +1,13 @@
 
-#include <assert.h>
-#include <headers/common.h>
+#include "common.h"
 #include <stdarg.h>
 #include <stdio.h>
 
-// wrapper of stdio printf
+// wrapper of stdio printf,
 // controlled by the debug verbose bit set
-uint64_t debug_printf(uint64_t open_set, const char *format, ...) {
+uint64_t
+debug_printf(uint64_t open_set, const char* format, ...)
+{
   if ((open_set & DEBUG_VERBOSE_SET) == 0x0) {
     return 0x1;
   }

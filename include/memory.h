@@ -1,10 +1,11 @@
 
+#pragma once
 // include guards to prevent double declaration of any identifiers
 // such as types, enums and static variables
-#ifndef MEMORY_GUARD
-#define MEMORY_GUARD
+#ifndef _MEMORY_H_
+#define _MEMORY_H_
 
-#include <headers/cpu.h>
+#include <cpu.h>
 #include <stdint.h>
 
 /*======================================*/
@@ -20,14 +21,17 @@
 
 // physical memory
 // 16 physical memory pages
-uint8_t pm[PHYSICAL_MEMORY_SPACE];
+extern uint8_t pm[PHYSICAL_MEMORY_SPACE];
 
 /*======================================*/
 /*             memory R/W               */
 /*======================================*/
 
 // used by instructions: read or write uint64_t to DRAM
-uint64_t read64bits_dram(uint64_t paddr, core_t *cr);
-void write64bits_dram(uint64_t paddr, uint64_t data, core_t *cr);
+uint64_t
+read64bits_dram(uint64_t paddr, core_t* cr);
 
-#endif
+void
+write64bits_dram(uint64_t paddr, uint64_t data, core_t* cr);
+
+#endif // _MEMORY_H_

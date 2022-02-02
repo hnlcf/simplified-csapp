@@ -1,17 +1,27 @@
 
-#include <headers/common.h>
+#include "common.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 // covert string to int64_t
-uint64_t string2uint(const char *str) { return string2uint_range(str, 0, -1); }
+uint64_t
+string2uint(const char* str)
+{
+  return string2uint_range(str, 0, -1);
+}
 
-uint64_t string2uint_range(const char *str, int start, int end) { return 0; }
+uint64_t
+string2uint_range(const char* str, int start, int end)
+{
+  return 0;
+}
 
 // convert uint32_t to its float
-uint32_t uint2float(uint32_t u) {
+uint32_t
+uint2float(uint32_t u)
+{
   if (u == 0x00000000) {
     return 0x00000000;
   }
@@ -39,11 +49,11 @@ uint32_t uint2float(uint32_t u) {
     a += u;
     // compute g, r, s
     uint32_t g =
-        (a >> (n - 23)) & 0x1; // Guard bit, the lowest bit of the result
+      (a >> (n - 23)) & 0x1; // Guard bit, the lowest bit of the result
     uint32_t r =
-        (a >> (n - 24)) & 0x1; // Round bit, the highest bit to be removed
+      (a >> (n - 24)) & 0x1; // Round bit, the highest bit to be removed
     uint32_t s =
-        0x0; // Sticky bit, the OR of remaining bits in the removed part (low)
+      0x0; // Sticky bit, the OR of remaining bits in the removed part (low)
     for (int j = 0; j < n - 24; ++j) {
       s = s | ((u >> j) & 0x1);
     }

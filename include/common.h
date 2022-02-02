@@ -1,9 +1,8 @@
-
+#pragma once
 // include guards to prevent double declaration of any identifiers
 // such as types, enums and static variables
-#ifndef DEBUG_GUARD
-#define DEBUG_GUARD
-
+#ifndef _COMMON_H_
+#define _COMMON_H_
 #include <stdint.h>
 
 /*======================================*/
@@ -38,4 +37,4 @@ uint32_t uint2float(uint32_t u);
 uint64_t string2uint(const char *str);
 uint64_t string2uint_range(const char *str, int start, int end);
 
-#endif
+#endif // _COMMON_H_
