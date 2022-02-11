@@ -34,7 +34,7 @@ typedef enum INST_OPERATOR
   INST_CMP,   // 8
   INST_JNE,   // 9
   INST_JMP,   // 10
-} op_t;
+} inst_op_e;
 
 typedef enum OPERAND_TYPE
 {
@@ -50,11 +50,11 @@ typedef enum OPERAND_TYPE
   MEM_IMM_REG2_SCAL,     // 9
   MEM_REG1_REG2_SCAL,    // 10
   MEM_IMM_REG1_REG2_SCAL // 11
-} od_type_t;
+} od_type_e;
 
 typedef struct OPERAND_STRUCT
 {
-  od_type_t type; // IMM, REG, MEM
+  od_type_e type; // IMM, REG, MEM
   uint64_t imm;   // immediate number
   uint64_t scal;  // scale number to register 2
   uint64_t reg1;  // main register
@@ -67,9 +67,9 @@ typedef struct OPERAND_STRUCT
 // Chapter 7 Linking: 7.5 Symbols and Symbol Tables
 typedef struct INST_STRUCT
 {
-  op_t op;  // enum of operators. e.g. mov, call, etc.
-  od_t src; // operand src of instruction
-  od_t dst; // operand dst of instruction
+  inst_op_e op; // enum of operators. e.g. mov, call, etc.
+  od_t src;     // operand src of instruction
+  od_t dst;     // operand dst of instruction
 } inst_t;
 
 /*======================================*/
