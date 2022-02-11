@@ -1,7 +1,18 @@
+/* CSAPP - Introduction to Computer Systems.
+ * Author:      louchangfeng@outlook.com
+ * Github:      https://github.com/hnlcf/simplified-csapp
+ *
+ * This project is exclusively owned by louchangfeng
+ * and shall not be used for commercial and profitting purpose
+ * without louchangfeng's permission.
+ *
+ * Thanks for yangminz's code repository and videos in my learning.
+ */
 
 #pragma once
 // include guards to prevent double declaration of any identifiers
 // such as types, enums and static variables
+#include <bits/stdint-uintn.h>
 #ifndef _CPU_H_
 #define _CPU_H_
 #include <stdint.h>
