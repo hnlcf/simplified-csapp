@@ -1,7 +1,17 @@
+/* CSAPP - Introduction to Computer Systems.
+ * Author:      louchangfeng@outlook.com
+ * Github:      https://github.com/hnlcf/simplified-csapp
+ *
+ * This project is exclusively owned by louchangfeng
+ * and shall not be used for commercial and profitting purpose
+ * without louchangfeng's permission.
+ *
+ * Thanks for yangminz's code repository and videos in my learning.
+ */
 
-#include <common.h>
-#include <cpu.h>
-#include <memory.h>
+#include "common.h"
+#include "cpu.h"
+#include "memory.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,10 +50,7 @@ TestAddFunctionCallAndComputation()
   ac->reg.rbp = 0x7ffffffee110;
   ac->reg.rsp = 0x7ffffffee0f0;
 
-  ac->CF = 0;
-  ac->ZF = 0;
-  ac->SF = 0;
-  ac->OF = 0;
+  ac->flags.__cpu_flag_values = 0;
 
   write64bits_dram(va2pa(0x7ffffffee110, ac), 0x0000000000000000, ac); // rbp
   write64bits_dram(va2pa(0x7ffffffee108, ac), 0x0000000000000000, ac);

@@ -1,7 +1,17 @@
+/* CSAPP - Introduction to Computer Systems.
+ * Author:      louchangfeng@outlook.com
+ * Github:      https://github.com/hnlcf/simplified-csapp
+ *
+ * This project is exclusively owned by louchangfeng
+ * and shall not be used for commercial and profitting purpose
+ * without louchangfeng's permission.
+ *
+ * Thanks for yangminz's code repository and videos in my learning.
+ */
 
-#include <common.h>
-#include <cpu.h>
-#include <memory.h>
+#include "common.h"
+#include "cpu.h"
+#include "memory.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,7 +34,7 @@ typedef enum INST_OPERATOR
   INST_CMP,   // 8
   INST_JNE,   // 9
   INST_JMP,   // 10
-} op_t;
+} inst_op_e;
 
 typedef enum OPERAND_TYPE
 {
@@ -40,11 +50,11 @@ typedef enum OPERAND_TYPE
   MEM_IMM_REG2_SCAL,     // 9
   MEM_REG1_REG2_SCAL,    // 10
   MEM_IMM_REG1_REG2_SCAL // 11
-} od_type_t;
+} od_type_e;
 
 typedef struct OPERAND_STRUCT
 {
-  od_type_t type; // IMM, REG, MEM
+  od_type_e type; // IMM, REG, MEM
   uint64_t imm;   // immediate number
   uint64_t scal;  // scale number to register 2
   uint64_t reg1;  // main register
@@ -57,9 +67,9 @@ typedef struct OPERAND_STRUCT
 // Chapter 7 Linking: 7.5 Symbols and Symbol Tables
 typedef struct INST_STRUCT
 {
-  op_t op;  // enum of operators. e.g. mov, call, etc.
-  od_t src; // operand src of instruction
-  od_t dst; // operand dst of instruction
+  inst_op_e op; // enum of operators. e.g. mov, call, etc.
+  od_t src;     // operand src of instruction
+  od_t dst;     // operand dst of instruction
 } inst_t;
 
 /*======================================*/
@@ -181,10 +191,7 @@ static handler_t handler_table[NUM_INSTRTYPE] = {
 static inline void
 reset_cflags(core_t* cr)
 {
-  cr->CF = 0;
-  cr->ZF = 0;
-  cr->SF = 0;
-  cr->OF = 0;
+  cr->flags.__cpu_flag_values = 0;
 }
 
 // update the rip pointer to the next instruction sequentially
@@ -388,8 +395,11 @@ print_register(core_t* cr)
          reg.rbp,
          reg.rsp);
   printf("rip = %16lx\n", cr->rip);
-  printf(
-    "CF = %u\tZF = %u\tSF = %u\tOF = %u\n", cr->CF, cr->ZF, cr->SF, cr->OF);
+  printf("CF = %u\tZF = %u\tSF = %u\tOF = %u\n",
+         cr->flags.CF,
+         cr->flags.ZF,
+         cr->flags.SF,
+         cr->flags.OF);
 }
 
 void

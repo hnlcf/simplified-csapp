@@ -30,7 +30,10 @@ clean:
 	rm -f $(BIN)/*.o $(BIN)/*~ $(EXE)
 
 fmt: cl
-	cd $(SRC_DIR) && find . -name "*.c" -o -name "*.h" | xargs clang-format -style=file -i
+	sh codeformat.sh
+
+count: cl
+	sh countlines.sh
 
 cl: 
 	clear

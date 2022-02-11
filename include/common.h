@@ -1,3 +1,14 @@
+/* CSAPP - Introduction to Computer Systems.
+ * Author:      louchangfeng@outlook.com
+ * Github:      https://github.com/hnlcf/simplified-csapp
+ *
+ * This project is exclusively owned by louchangfeng
+ * and shall not be used for commercial and profitting purpose
+ * without louchangfeng's permission.
+ *
+ * Thanks for yangminz's code repository and videos in my learning.
+ */
+
 #pragma once
 // include guards to prevent double declaration of any identifiers
 // such as types, enums and static variables
@@ -27,14 +38,18 @@
 #define DEBUG_ENABLE_SRAM_CACHE 0
 
 // printf wrapper
-uint64_t debug_printf(uint64_t open_set, const char *format, ...);
+uint64_t
+debug_printf(uint64_t open_set, const char* format, ...);
 
 // type converter
 // uint32 to its equivalent float with rounding
-uint32_t uint2float(uint32_t u);
+uint32_t
+uint2float(uint32_t u);
 
 // convert string dec or hex to the integer bitmap
-uint64_t string2uint(const char *str);
-uint64_t string2uint_range(const char *str, int start, int end);
+uint64_t
+string2uint(const char* str);
+uint64_t
+string2uint_range(const char* str, int start, int end);
 
 #endif // _COMMON_H_
