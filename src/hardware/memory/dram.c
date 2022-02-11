@@ -1,9 +1,9 @@
 
 // Dynamic Random Access Memory
 #include "common.h"
-#include "cpu.h"
 #include "memory.h"
 #include <stdint.h>
+#include "cpu.h"
 
 /*
 Be careful with the x86-64 little endian integer encoding

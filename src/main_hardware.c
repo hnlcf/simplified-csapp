@@ -1,8 +1,8 @@
 
-#include "common.h"
-#include "cpu.h"
-#include "memory.h"
 #include <stdint.h>
+#include "memory.h"
+#include "cpu.h"
+#include "common.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
