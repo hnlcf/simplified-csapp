@@ -191,10 +191,7 @@ static handler_t handler_table[NUM_INSTRTYPE] = {
 static inline void
 reset_cflags(core_t* cr)
 {
-  cr->CF = 0;
-  cr->ZF = 0;
-  cr->SF = 0;
-  cr->OF = 0;
+  cr->flags.__cpu_flag_values = 0;
 }
 
 // update the rip pointer to the next instruction sequentially
@@ -398,8 +395,11 @@ print_register(core_t* cr)
          reg.rbp,
          reg.rsp);
   printf("rip = %16lx\n", cr->rip);
-  printf(
-    "CF = %u\tZF = %u\tSF = %u\tOF = %u\n", cr->CF, cr->ZF, cr->SF, cr->OF);
+  printf("CF = %u\tZF = %u\tSF = %u\tOF = %u\n",
+         cr->flags.CF,
+         cr->flags.ZF,
+         cr->flags.SF,
+         cr->flags.OF);
 }
 
 void
