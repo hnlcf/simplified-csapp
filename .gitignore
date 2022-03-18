@@ -4,6 +4,7 @@ out
 csapp.sublime-project
 csapp.sublime-workspace
 
+csapp-exercise/
 test/
 build/
 .cache/
