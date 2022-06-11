@@ -1,14 +1,3 @@
-/* CSAPP - Introduction to Computer Systems.
- * Author:      louchangfeng@outlook.com
- * Github:      https://github.com/hnlcf/simplified-csapp
- *
- * This project is exclusively owned by louchangfeng
- * and shall not be used for commercial and profitting purpose
- * without louchangfeng's permission.
- *
- * Thanks for yangminz's code repository and videos in my learning.
- */
-
 #include <common.h>
 #include <cpu.h>
 #include <memory.h>
@@ -19,11 +8,11 @@
 
 #define MAX_NUM_INSTRUCTION_CYCLE 100
 
-static void TestAddFunctionCallAndComputation();
-static void TestString2Uint();
+static void test_add_function_call_and_computation();
+static void test_string_to_uint();
 
-void TestParseOperand();
-void parse_operand(const char* str, od_t* od, core_t* cr);
+void test_parse_operand();
+void parse_operand(const char *str, od_t *od, core_t *cr);
 
 // Define global variables.
 core_t   cores[NUM_CORES];
@@ -32,15 +21,15 @@ uint64_t ACTIVE_CORE;
 int
 main() {
     printf("Hello World\n");
-    TestParseOperand();
-    // TestAddFunctionCallAndComputation();
+    test_parse_operand();
+    test_add_function_call_and_computation();
     return 0;
 }
 
 static void
-TestAddFunctionCallAndComputation() {
+test_add_function_call_and_computation() {
     ACTIVE_CORE = 0x0;
-    core_t* ac  = (core_t*)&cores[ACTIVE_CORE];
+    core_t *ac = (core_t *) &cores[ACTIVE_CORE];
 
     // init state
     ac->reg.rax = 0xabcd;
@@ -83,7 +72,7 @@ TestAddFunctionCallAndComputation() {
         "callq  0",                 // 13
         "mov    %rax,-0x8(%rbp)",   // 14
     };
-    ac->rip = (uint64_t)&assembly[11];
+    ac->rip = (uint64_t) &assembly[11];
     sprintf(assembly[13], "callq  $%p", &assembly[0]);
 
     printf("begin\n");
@@ -97,42 +86,30 @@ TestAddFunctionCallAndComputation() {
 
     // gdb state ret from func
     int match = 1;
-    match     = match && ac->reg.rax == 0x1234abcd;
-    match     = match && ac->reg.rbx == 0x8000670;
-    match     = match && ac->reg.rcx == 0x8000670;
-    match     = match && ac->reg.rdx == 0xabcd;
-    match     = match && ac->reg.rsi == 0x12340000;
-    match     = match && ac->reg.rdi == 0xabcd;
-    match     = match && ac->reg.rbp == 0x7ffffffee110;
-    match     = match && ac->reg.rsp == 0x7ffffffee0f0;
+    match = match && ac->reg.rax == 0x1234abcd;
+    match = match && ac->reg.rbx == 0x8000670;
+    match = match && ac->reg.rcx == 0x8000670;
+    match = match && ac->reg.rdx == 0xabcd;
+    match = match && ac->reg.rsi == 0x12340000;
+    match = match && ac->reg.rdi == 0xabcd;
+    match = match && ac->reg.rbp == 0x7ffffffee110;
+    match = match && ac->reg.rsp == 0x7ffffffee0f0;
 
     if (match) {
         printf("register match\n");
-    }
-    else {
+    } else {
         printf("register mismatch\n");
     }
 
-    match = match
-            && (read64bits_dram(va2pa(0x7ffffffee110, ac), ac)
-                == 0x0000000000000000);  // rbp
-    match = match
-            && (read64bits_dram(va2pa(0x7ffffffee108, ac), ac)
-                == 0x000000001234abcd);
-    match = match
-            && (read64bits_dram(va2pa(0x7ffffffee100, ac), ac)
-                == 0x0000000012340000);
-    match = match
-            && (read64bits_dram(va2pa(0x7ffffffee0f8, ac), ac)
-                == 0x000000000000abcd);
-    match = match
-            && (read64bits_dram(va2pa(0x7ffffffee0f0, ac), ac)
-                == 0x0000000000000000);  // rsp
+    match = match && (read64bits_dram(va2pa(0x7ffffffee110, ac), ac) == 0x0000000000000000);  // rbp
+    match = match && (read64bits_dram(va2pa(0x7ffffffee108, ac), ac) == 0x000000001234abcd);
+    match = match && (read64bits_dram(va2pa(0x7ffffffee100, ac), ac) == 0x0000000012340000);
+    match = match && (read64bits_dram(va2pa(0x7ffffffee0f8, ac), ac) == 0x000000000000abcd);
+    match = match && (read64bits_dram(va2pa(0x7ffffffee0f0, ac), ac) == 0x0000000000000000);  // rsp
 
     if (match) {
         printf("memory match\n");
-    }
-    else {
+    } else {
         printf("memory mismatch\n");
     }
 }
