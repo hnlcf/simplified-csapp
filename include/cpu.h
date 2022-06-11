@@ -194,8 +194,7 @@ typedef struct CPU_FLAGS_STRUCT {
             uint16_t CF;  // carry flag: detect overflow for unsigned operations
             uint16_t ZF;  // zero flag: result is zero
             uint16_t SF;  // sign flag: result is negative: highest bit
-            uint16_t
-                OF;  // overflow flag: detect overflow for signed operations
+            uint16_t OF;  // overflow flag: detect overflow for signed operations
         };
     };
 
@@ -243,10 +242,9 @@ typedef struct CORE_STRUCT {
     reg_t reg;
 } core_t;
 
-#define NUM_CORES 1  // define cpu core array to support core level parallelism1
-extern core_t
-    cores[NUM_CORES];  // global cpu core, cores --> `core_t cores[NUM_CORES]`.
-extern uint64_t ACTIVE_CORE;  // active core for current task
+#define NUM_CORES 1                // define cpu core array to support core level parallelism1
+extern core_t   cores[NUM_CORES];  // global cpu core, cores --> `core_t cores[NUM_CORES]`.
+extern uint64_t ACTIVE_CORE;       // active core for current task
 
 /*======================================*/
 /*      instruction set architecture    */
@@ -304,7 +302,7 @@ typedef struct INST_STRUCT {
 #define NUM_INSTRTYPE        14
 
 // CPU's instruction cycle: execution of instructions
-void instruction_cycle(core_t* cr);
+void instruction_cycle(core_t *cr);
 
 /*--------------------------------------*/
 // place the functions here because they requires the core_t type
@@ -314,11 +312,11 @@ void instruction_cycle(core_t* cr);
 
 // translate the virtual address to physical address in MMU
 // each MMU is owned by each core
-uint64_t va2pa(uint64_t vaddr, core_t* cr);
+uint64_t va2pa(uint64_t vaddr, core_t *cr);
 
 // symbols from isa and sram
-void print_register(core_t* cr);
-void print_stack(core_t* cr);
+void print_register(core_t *cr);
+void print_stack(core_t *cr);
 
 // end of include guard
 #endif  // CSAPP_CPU_H
